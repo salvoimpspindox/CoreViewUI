@@ -16,23 +16,16 @@ import { selectCart } from '../../store/cart/cart.selectors';
 })
 export class HomeComponent implements OnInit {
   items$: Observable<Item[]>;
-  cartDetails$: Observable<CartDetail[]>;
 
 
   constructor(private itemsService: ItemsService, private cartService: CartService, private store: Store<AppState>) {}
 
   ngOnInit() {
-    this.store.dispatch(cartActions.getCart());
-
     this.items$ = this.itemsService.getItems();
-    this.cartDetails$ = this.store.select(selectCart);
   }
 
   addItem(item: Item): void {
     this.store.dispatch(cartActions.addToCart({ item }));
   }
 
-  emptyCart(){
-    this.store.dispatch(cartActions.emptyCart());
-  }
 }

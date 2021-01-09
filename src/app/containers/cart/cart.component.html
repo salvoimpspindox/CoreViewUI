@@ -1,31 +1,59 @@
-<div>
-  <table style="margin-top:10px;">
-    <thead class="text-primary font-weight-bold">
-      <tr>
-        <th scope="col">Nome</th>
-        <th scope="col">Prezzo</th>
-        <th scope="col">Quantità</th>
-      </tr>
-    </thead>
-    <tbody class="shadow">
-      <tr *ngFor="let d of (cartDetails)">
-        <td>
-          {{d.item.name}}
-        </td>
-        <td>
-          {{d.item.price}}
-        </td>
-        <td>
-          <input style="width: 100%;" type="number" [(ngModel)]="d.quantity">
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div [ngSwitch]="step">
+  <div *ngSwitchCase="1">
 
-  <p *ngIf="discount"> {{discount.name}} {{discount.value * -1}}</p>
+    <table style="margin-top:10px;">
+      <thead class="text-primary font-weight-bold">
+        <tr>
+          <th scope="col">Nome</th>
+          <th scope="col">Prezzo</th>
+          <th scope="col">Quantità</th>
+        </tr>
+      </thead>
+      <tbody class="shadow">
+        <tr *ngFor="let d of (cartDetails)">
+          <td>
+            {{d.item.name}}
+          </td>
+          <td>
+            {{d.item.price}}
+          </td>
+          <td>
+            <input style="width: 100%;" type="number" [(ngModel)]="d.quantity">
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <button (click)="emptyCart()"> Svuota carrello </button>
 
-  <input placeholder="Inserisci codice sconto" #inp /> <button (click)="getDiscount(inp.value)"> APPLICA</button>
+    <p *ngIf="discount"> {{discount.name}} {{discount.value * -1}}</p>
 
-  <button (click)="calculateSummary()"> CALCOLA</button>
+    <input placeholder="Inserisci codice sconto" #inp /> <button (click)="getDiscount(inp.value)"> APPLICA</button>
+
+    <div>
+      <button (click)="calculateSummary()"> CALCOLA</button>
+    </div>
+  </div>
+
+  <div *ngSwitchCase="2">
+    <p> Totale: {{cartSummary.totalPrice}} </p>
+
+    <div>
+      <button (click)="saveOrder()"> CONFERMA E PAGA</button>
+    </div>
+
+  </div>
+
+  <div *ngSwitchCase="3">
+
+    <select [(ngModel)]="paymentMode">
+      <option *ngFor="let payment of cartSummary.availablePaymentModes">
+        {{payment}}</option>
+    </select>
+
+    <div>
+      <button (click)="payOrder()"> PAGA</button>
+    </div>
+
+  </div>
 
 </div>

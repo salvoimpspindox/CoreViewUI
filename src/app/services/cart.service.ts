@@ -4,7 +4,7 @@ import { APP_CONFIG, IAppConfig } from '../app.config';
 import { Observable } from 'rxjs';
 import { CartDetail } from '../models/CartDetail';
 import { CartSummary } from '../models/CartSummary';
-import { Cart } from '../models/Cart';
+import { CreateOrder } from '../models/CreateOrder';
 
 @Injectable()
 export class CartService {
@@ -22,7 +22,7 @@ export class CartService {
     return this.http.get<CartDetail[]>(`${this.config.apiEndpoint}cart/details`);
   }
 
-  calculateSummary(cart: Cart): Observable<CartSummary> {
+  calculateSummary(cart: CreateOrder): Observable<CartSummary> {
     return this.http.post<CartSummary>(`${this.config.apiEndpoint}cart/calculateSummary`, cart);
   }
 }

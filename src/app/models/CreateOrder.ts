@@ -1,6 +1,6 @@
 import { OrderDetail } from './OrderDetail';
 
-export class Cart {
+export class CreateOrder {
   details: OrderDetail[];
   appliedDiscountCode: string;
 }

@@ -17,6 +17,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { CartComponent } from './containers/cart/cart.component';
 import { FormsModule } from '@angular/forms';
 import { DiscountsService } from './services/discouts.service';
+import { OrderService } from './services/order.service';
 
 @NgModule({
   declarations: [
@@ -39,7 +40,7 @@ import { DiscountsService } from './services/discouts.service';
     FormsModule
   ],
   providers: [ItemsService, CartService,
-    DiscountsService,
+    DiscountsService, OrderService,
     {
       provide: APP_CONFIG,
       useValue: AppConfig

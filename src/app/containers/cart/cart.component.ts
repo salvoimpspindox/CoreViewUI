@@ -8,8 +8,11 @@ import * as cartActions from '../../store/cart/cart.action';
 import { DiscountsService } from '../../services/discouts.service';
 import { Discount } from 'src/app/models/Discount';
 import { CartService } from '../../services/cart.service';
-import { Cart } from 'src/app/models/Cart';
+import { CreateOrder } from 'src/app/models/CreateOrder';
 import { OrderDetail } from '../../models/OrderDetail';
+import { CartSummary } from '../../models/CartSummary';
+import { OrderService } from 'src/app/services/order.service';
+import { PaymentModeEnum } from '../../models/PaymentModeEnum';
 
 @Component({
   selector: 'app-cart',
@@ -19,9 +22,17 @@ import { OrderDetail } from '../../models/OrderDetail';
 export class CartComponent implements OnInit {
   cartDetails: CartDetail[];
   discount: Discount;
+  step: number = 1;
+  cartSummary: CartSummary;
+  orderId: number;
+  paymentMode: PaymentModeEnum;
 
-  constructor(private store: Store<AppState>, private discountService: DiscountsService,
-    private cartSrevice: CartService) {}
+  constructor(
+    private store: Store<AppState>,
+    private discountService: DiscountsService,
+    private cartService: CartService,
+    private orderService: OrderService
+  ) {}
 
   ngOnInit() {
     this.store.dispatch(cartActions.getCart());
@@ -35,11 +46,38 @@ export class CartComponent implements OnInit {
   }
 
   calculateSummary(): void {
-    let cart = new Cart();
-    cart.details = this.cartDetails.map(x => Object.assign(new OrderDetail(), {itemId: x.item.id, quantity : x.quantity}));
-    if (this.discount){
-      cart.appliedDiscountCode = this.discount.name;
-    }
-    this.cartSrevice.calculateSummary(cart).subscribe(x => console.log(x));
+    this.cartService.calculateSummary(this.createOrder()).subscribe((x) => {
+      this.cartSummary = x;
+      this.step = 2;
+    });
   }
+
+  saveOrder(): void {
+    this.orderService.createOrder(this.createOrder()).subscribe( x => {
+      this.orderId = x;
+      this.step = 3;
+    })
+  }
+
+  payOrder(): void {
+    this.orderService.payOrder(this.orderId, {paymentMode: this.paymentMode}).subscribe( x => {
+      console.log('paid');
+    })
+  }
+
+  private createOrder(): CreateOrder {
+    let order = new CreateOrder();
+    order.details = this.cartDetails.map((x) =>
+      Object.assign(new OrderDetail(), { itemId: x.item.id, quantity: x.quantity })
+    );
+    if (this.discount) {
+      order.appliedDiscountCode = this.discount.name;
+    }
+    return order;
+  }
+
+  emptyCart(){
+    this.store.dispatch(cartActions.emptyCart());
+  }
+
 }
