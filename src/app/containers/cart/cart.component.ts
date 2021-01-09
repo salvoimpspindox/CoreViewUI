@@ -13,6 +13,7 @@ import { OrderDetail } from '../../models/OrderDetail';
 import { CartSummary } from '../../models/CartSummary';
 import { OrderService } from 'src/app/services/order.service';
 import { PaymentModeEnum } from '../../models/PaymentModeEnum';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-cart',
@@ -26,12 +27,14 @@ export class CartComponent implements OnInit {
   cartSummary: CartSummary;
   orderId: number;
   paymentMode: PaymentModeEnum;
+  paid: boolean = false;
 
   constructor(
     private store: Store<AppState>,
     private discountService: DiscountsService,
     private cartService: CartService,
-    private orderService: OrderService
+    private orderService: OrderService,
+    private toastrSevice: ToastrService
   ) {}
 
   ngOnInit() {
@@ -53,17 +56,18 @@ export class CartComponent implements OnInit {
   }
 
   saveOrder(): void {
-    this.orderService.createOrder(this.createOrder()).subscribe(x => {
+    this.orderService.createOrder(this.createOrder()).subscribe((x) => {
       this.orderId = x;
       this.step = 3;
       this.emptyCart();
-    })
+    });
   }
 
   payOrder(): void {
-    this.orderService.payOrder(this.orderId, {paymentMode: this.paymentMode}).subscribe( x => {
-      console.log('paid');
-    })
+    this.orderService.payOrder(this.orderId, { paymentMode: this.paymentMode }).subscribe((x) => {
+      this.paid = true;
+      this.toastrSevice.success("ORDINE PAGATO");
+    });
   }
 
   private createOrder(): CreateOrder {
@@ -77,8 +81,7 @@ export class CartComponent implements OnInit {
     return order;
   }
 
-  emptyCart(){
+  emptyCart() {
     this.store.dispatch(cartActions.emptyCart());
   }
-
 }
