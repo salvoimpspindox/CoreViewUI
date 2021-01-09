@@ -45,18 +45,24 @@ export class CartComponent implements OnInit {
   }
 
   getDiscount(discountCode): void {
-    this.discountService.getDiscount(discountCode).subscribe((d) => (this.discount = d),
-    (e) => {
-      if (e.status === 404){
-        this.toastrSevice.warning('SCONTO NON TROVATO', '', {timeOut: 800})
+    this.discountService.getDiscount(discountCode).subscribe(
+      (d) => (this.discount = d),
+      (e) => {
+        if (e.status === 404) {
+          this.toastrSevice.warning('SCONTO NON TROVATO', '', { timeOut: 800 });
+        }
       }
-    });
+    );
   }
 
   calculateSummary(): void {
     this.cartService.calculateSummary(this.createOrder()).subscribe((x) => {
-      this.cartSummary = x;
-      this.step = 2;
+      if (x.totalPrice < 0) {
+        this.toastrSevice.warning('IMPORTO NEGATIVO. RIMUOVI SCONTO', '', { timeOut: 1000 });
+      } else {
+        this.cartSummary = x;
+        this.step = 2;
+      }
     });
   }
 
@@ -71,7 +77,7 @@ export class CartComponent implements OnInit {
   payOrder(): void {
     this.orderService.payOrder(this.orderId, { paymentMode: this.paymentMode }).subscribe((x) => {
       this.paid = true;
-      this.toastrSevice.success("ORDINE PAGATO");
+      this.toastrSevice.success('ORDINE PAGATO');
     });
   }
 
