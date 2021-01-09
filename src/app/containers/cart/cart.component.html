@@ -2,14 +2,14 @@
   <div *ngSwitchCase="1">
 
     <table style="margin-top:10px;">
-      <thead class="text-primary font-weight-bold">
+      <thead>
         <tr>
           <th scope="col" style="width:200px">Nome</th>
           <th scope="col" style="width:200px">Prezzo</th>
           <th scope="col" style="width:200px">Quantità</th>
         </tr>
       </thead>
-      <tbody class="shadow">
+      <tbody>
         <tr *ngFor="let d of (cartDetails)">
           <td>
             {{d.item.name}}
@@ -26,7 +26,7 @@
 
     <div *ngIf="discount">
       <table>
-        <tbody class="shadow">
+        <tbody>
           <tr>
             <td style="width:200px">
               {{discount.name}}
@@ -54,14 +54,14 @@
   <div *ngSwitchCase="2">
 
     <table style="margin-top:10px;">
-      <thead class="text-primary font-weight-bold">
+      <thead>
         <tr>
           <th scope="col" style="width:200px">Nome</th>
           <th scope="col" style="width:200px">Prezzo</th>
           <th scope="col" style="width:200px">Quantità</th>
         </tr>
       </thead>
-      <tbody class="shadow">
+      <tbody>
         <tr *ngFor="let d of (cartDetails)">
           <td>
             {{d.item.name}}
@@ -78,7 +78,7 @@
 
     <div>
       <table>
-        <tbody class="shadow">
+        <tbody>
           <tr *ngIf="discount">
             <td style="width:200px">
               {{discount.name}}

@@ -1,4 +1,23 @@
-<p *ngFor="let item of (items$ | async)">
-  {{item.name}} {{item.price}}
-  <button (click)="addItem(item)"> Aggiungi </button>
-</p>
+<table style="margin-top:10px;">
+  <thead>
+    <tr>
+      <th scope="col" style="width:200px">Nome</th>
+      <th scope="col" style="width:200px">Prezzo</th>
+      <th>Aggiungi</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let item of (items$ | async)">
+      <td>
+        {{item.name}}
+      </td>
+      <td style="float:right;margin-right:5px">
+        {{item.price}}
+      </td>
+      <td>
+        <i style="float:right;margin-right:5px;cursor: pointer;" (click)="addItem(item)" class="fa fa-plus-circle"></i>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
