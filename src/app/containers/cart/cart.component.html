@@ -4,9 +4,9 @@
     <table style="margin-top:10px;">
       <thead class="text-primary font-weight-bold">
         <tr>
-          <th scope="col">Nome</th>
-          <th scope="col">Prezzo</th>
-          <th scope="col">Quantità</th>
+          <th scope="col" style="width:200px">Nome</th>
+          <th scope="col" style="width:200px">Prezzo</th>
+          <th scope="col" style="width:200px">Quantità</th>
         </tr>
       </thead>
       <tbody class="shadow">
@@ -14,18 +14,31 @@
           <td>
             {{d.item.name}}
           </td>
-          <td>
+          <td style="float:right;margin-right:5px">
             {{d.item.price}}
           </td>
           <td>
-            <input style="width: 100%;" type="number" [(ngModel)]="d.quantity">
+            <input style="width: 50px;float:right;margin-right:5px" min="0" type="number" [(ngModel)]="d.quantity">
           </td>
         </tr>
       </tbody>
     </table>
     <button (click)="emptyCart()"> Svuota carrello </button>
 
-    <p *ngIf="discount"> {{discount.name}} {{discount.value * -1}}</p>
+    <div *ngIf="discount">
+      <table>
+        <tbody class="shadow">
+          <tr>
+            <td style="width:200px">
+              {{discount.name}}
+            </td>
+            <td style="width:200px">
+              <span style="float:right;margin-right:5px"> {{discount.value * -1}}</span>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
 
     <input placeholder="Inserisci codice sconto" #inp /> <button (click)="getDiscount(inp.value)"> APPLICA</button>
 

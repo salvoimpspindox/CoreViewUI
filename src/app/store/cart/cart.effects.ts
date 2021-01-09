@@ -10,8 +10,11 @@ import { emptyCart } from './cart.action';
 
 @Injectable()
 export class CartEffects {
-  constructor(private readonly actions: Actions, private readonly cartService: CartService,
-    private toastrService: ToastrService) {}
+  constructor(
+    private readonly actions: Actions,
+    private readonly cartService: CartService,
+    private toastrService: ToastrService
+  ) {}
 
   @Effect()
   getCart$ = this.actions.pipe(
@@ -59,6 +62,12 @@ export class CartEffects {
   emptyCartSuccess$ = this.actions.pipe(ofType(cartActions.emptyCartSuccess), map(() => cartActions.getCart()));
 
   @Effect({ dispatch: false })
-  addToCartFailure$ = this.actions.pipe(ofType(cartActions.addToCartFailure), tap((error : any) => this.toastrService.warning('Elemento già presente nel carrello')));
-
+  addToCartFailure$ = this.actions.pipe(
+    ofType(cartActions.addToCartFailure),
+    tap((error: any) =>
+      this.toastrService.warning('Elemento già presente nel carrello', '', {
+        timeOut: 800
+      })
+    )
+  );
 }
