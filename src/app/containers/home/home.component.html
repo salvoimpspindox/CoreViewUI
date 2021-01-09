@@ -1,0 +1,12 @@
+<p>home works!</p>
+<p *ngFor="let item of (items$ | async)">
+  {{item.name}} {{item.price}}
+  <button (click)="addItem(item)"> Aggiungi </button>
+</p>
+
+<button (click)="emptyCart()"> Svuota carrello </button>
+
+
+<p *ngFor="let d of (cartDetails$ | async)">
+  {{d.item.name}} {{d.item.price}}
+</p>

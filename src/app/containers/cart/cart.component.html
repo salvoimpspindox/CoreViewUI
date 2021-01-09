@@ -1,0 +1,31 @@
+<div>
+  <table style="margin-top:10px;">
+    <thead class="text-primary font-weight-bold">
+      <tr>
+        <th scope="col">Nome</th>
+        <th scope="col">Prezzo</th>
+        <th scope="col">Quantità</th>
+      </tr>
+    </thead>
+    <tbody class="shadow">
+      <tr *ngFor="let d of (cartDetails)">
+        <td>
+          {{d.item.name}}
+        </td>
+        <td>
+          {{d.item.price}}
+        </td>
+        <td>
+          <input style="width: 100%;" type="number" [(ngModel)]="d.quantity">
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p *ngIf="discount"> {{discount.name}} {{discount.value * -1}}</p>
+
+  <input placeholder="Inserisci codice sconto" #inp /> <button (click)="getDiscount(inp.value)"> APPLICA</button>
+
+  <button (click)="calculateSummary()"> CALCOLA</button>
+
+</div>
