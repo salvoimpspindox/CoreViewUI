@@ -53,9 +53,10 @@ export class CartComponent implements OnInit {
   }
 
   saveOrder(): void {
-    this.orderService.createOrder(this.createOrder()).subscribe( x => {
+    this.orderService.createOrder(this.createOrder()).subscribe(x => {
       this.orderId = x;
       this.step = 3;
+      this.emptyCart();
     })
   }
 

@@ -1,1 +1,7 @@
-<nav><div style="float:right; margin-right:30px" routerLink="/cart" >Carrello: {{ (cartDetails$ |async).length}} </div></nav>
+<nav style="height: 20px;background: lightgrey;padding: 5px;">
+
+  <div style="float:left; margin-left:10px; cursor: pointer;" routerLink=""> <i class="fa fa-home"></i> </div>
+
+  <div style="float:right; margin-right:10px; cursor: pointer;" routerLink="/cart"> <i class="fa fa-shopping-cart"></i>
+    {{ (cartDetails$ |async).length}} </div>
+</nav>
