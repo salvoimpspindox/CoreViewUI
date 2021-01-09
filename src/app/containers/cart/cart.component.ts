@@ -45,7 +45,12 @@ export class CartComponent implements OnInit {
   }
 
   getDiscount(discountCode): void {
-    this.discountService.getDiscount(discountCode).subscribe((d) => (this.discount = d));
+    this.discountService.getDiscount(discountCode).subscribe((d) => (this.discount = d),
+    (e) => {
+      if (e.status === 404){
+        this.toastrSevice.warning('SCONTO NON TROVATO', '', {timeOut: 800})
+      }
+    });
   }
 
   calculateSummary(): void {
