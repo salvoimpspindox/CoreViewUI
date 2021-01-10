@@ -56,14 +56,17 @@ export class CartComponent implements OnInit {
   }
 
   calculateSummary(): void {
-    this.cartService.calculateSummary(this.createOrder()).subscribe((x) => {
-      if (x.totalPrice < 0) {
-        this.toastrSevice.warning('IMPORTO NEGATIVO. RIMUOVI SCONTO', '', { timeOut: 1000 });
-      } else {
+    this.cartService.calculateSummary(this.createOrder()).subscribe(
+      (x) => {
         this.cartSummary = x;
         this.step = 2;
+      },
+      (e) => {
+        if (e.error === 'TotalPrice less than 0') {
+          this.toastrSevice.warning('IMPORTO NEGATIVO. RIMUOVI SCONTO', '', { timeOut: 1000 });
+        }
       }
-    });
+    );
   }
 
   saveOrder(): void {
