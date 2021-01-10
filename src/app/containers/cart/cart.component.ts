@@ -98,4 +98,13 @@ export class CartComponent implements OnInit {
   emptyCart() {
     this.store.dispatch(cartActions.emptyCart());
   }
+
+  translate(paymentMode: string) {
+    switch (paymentMode) {
+      case 'CASH':
+        return 'CONTANTI';
+      case 'CREDIT_CARD':
+        return 'CARTA DI CREDITO';
+    }
+  }
 }

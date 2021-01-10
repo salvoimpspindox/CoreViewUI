@@ -113,8 +113,8 @@
     <div style="display: inline-block;">
       <div style="margin-top:10px">
         <select [(ngModel)]="paymentMode">
-          <option *ngFor="let payment of cartSummary.availablePaymentModes">
-            {{payment}}</option>
+          <option *ngFor="let payment of cartSummary.availablePaymentModes" [ngValue]="payment">
+            {{translate(payment)}}</option>
         </select>
 
         <button [disabled]="paid || !paymentMode" style="margin-left: 10px;" (click)="payOrder()"> PAGA</button>
