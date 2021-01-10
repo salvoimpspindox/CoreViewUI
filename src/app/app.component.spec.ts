@@ -1,16 +1,29 @@
+import { FormsModule } from '@angular/forms';
 import { TestBed, async } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { provideMockStore } from '@ngrx/store/testing';
+import { CartComponent } from './containers/cart/cart.component';
+import { HomeComponent } from './containers/home/home.component';
+
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule,
+        FormsModule
       ],
       declarations: [
-        AppComponent
+        AppComponent,
+        ToolbarComponent,
+        CartComponent,
+        HomeComponent
       ],
+      providers: [
+        provideMockStore({}),
+      ]
     }).compileComponents();
   }));
 
@@ -18,18 +31,5 @@ describe('AppComponent', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.debugElement.componentInstance;
     expect(app).toBeTruthy();
-  });
-
-  it(`should have as title 'CoreViewUI'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.debugElement.componentInstance;
-    expect(app.title).toEqual('CoreViewUI');
-  });
-
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.debugElement.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('CoreViewUI app is running!');
   });
 });
