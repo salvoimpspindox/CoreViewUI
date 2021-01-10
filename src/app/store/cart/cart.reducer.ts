@@ -8,14 +8,14 @@ export interface CartState {
   cart: { roots: CartDetail[] };
 }
 
-export const initialGenericDataState: CartState = {
+export const initialCartState: CartState = {
   cart: {roots: [] },
   loading: false,
   error: null
 };
 
 const cart = createReducer(
-  initialGenericDataState,
+  initialCartState,
   on(cartActions.getCart, (state) => ({
     ...state,
     loading: true,
@@ -33,7 +33,7 @@ const cart = createReducer(
   }))
 );
 
-export function cartReducer(state: undefined, action: Action) {
+export function cartReducer(state: any, action: Action) {
   return cart(state, action);
 }
 

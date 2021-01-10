@@ -6,8 +6,15 @@ import { CartDetail } from '../models/CartDetail';
 import { CartSummary } from '../models/CartSummary';
 import { CreateOrder } from '../models/CreateOrder';
 
+export interface ICartService {
+  addItemToCart(itemId: number): Observable<void>;
+  emptyCart(): Observable<void>;
+  getCartDetails(): Observable<CartDetail[]>;
+  calculateSummary(cart: CreateOrder): Observable<CartSummary>;
+}
+
 @Injectable()
-export class CartService {
+export class CartService implements ICartService {
   constructor(private http: HttpClient, @Inject(APP_CONFIG) private config: IAppConfig) {}
 
   addItemToCart(itemId: number): Observable<void> {
